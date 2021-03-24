@@ -12,52 +12,43 @@ struct MaxHeap
 
 	void SiftUp(int i)
 	{	
-		while (i > 0) 
+		while (i > 1) 
 		{	
 			if (array[i] > array[Parent(i)])
 			{
 				int t = array[i];
 				array[i] = array[Parent(i)];
 				array[Parent(i)] = t;
-				//std::cout << array[i]<<std::endl;
 				i = Parent(i);
 			}
 			else
 				break;
 		}	
-			// count += 1;
-			// int k = 0;
-			// std::cout <<"!!"<<std::endl;
-			// for (int k =0; k < count;k++)
-			// {
-			// 	std::cout << array[k]<<std::endl;
-			// }
-			// std::cout <<"!!"<<std::endl;
+
 	}
 
 	void SiftDown(int i)
 	{
 		int max_index = i;
 
-		if (LeftChild(i) < max_size && array[LeftChild(i)] > array[i])
+		if (LeftChild(i) < size && array[LeftChild(i)] > array[max_index])
 		{
 			max_index = LeftChild(i);
 		}
 		
-		if (RightChild(i) < max_size && array[RightChild(i)] > array[i])
+		if (RightChild(i) < size && array[RightChild(i)] > array[max_index])
 		{
 			max_index = RightChild(i);
 		}
+
 		
 		if (max_index != i)
 		{	
-		//	std::cout << array[max_index] <<std::endl;
+			int t = array[max_index];
 			array[max_index] = array[i];
-			array[i] = array[max_index];
-			i = max_index;
+			array[i] = t;
 			SiftDown(max_index);
 		}
-
 	}
 
 	void Insert(int p)
@@ -66,7 +57,6 @@ struct MaxHeap
 		{
 			array[size] = p;
 
-			//std::cout << p << std::endl;
 			SiftUp(size);
 			size++;
 		}
@@ -74,14 +64,20 @@ struct MaxHeap
 
 	int ExtractMax()
 	{	
-		int result = array[0];
-		//std::cout <<array[0]<<std::endl;
-		//std::cout <<array[size]<<std::endl;
-		array[0] = array[size-1];
 
+
+		int result = array[0];
+		array[0] = array[size-1];
 		size--;
 		SiftDown(0);
 		return result;
+	}
+
+	void PrintArray()
+	{
+		for (int i = 0; i < size; i++)
+			std::cout<<array[i] << " ";
+		std::cout << std::endl;
 	}
 
 	int GetMax()
@@ -105,7 +101,7 @@ struct MaxHeap
 		{
 			heap->Insert(array[i]);
 		}
-		for (int i = size; size >= 0; size--)
+		for (int i = size; size > 0; size--)
 		{	
 			ar[i] = heap->ExtractMax();
 			std::cout <<ar[i]<<std::endl;
@@ -113,17 +109,10 @@ struct MaxHeap
 		return array;
 	}
 
-
-
 int main()
 {
-	int students[6] = {1,2,3,4,5,6};
+	int students[6] = {200,1,5,45,86,231};
 	HeadSort(students, 6);
-	// while (i!=0)
-	// {
-	// 	std::cout <<a[i]<<std:end;
-	// 	i++; 
-	// }
 
 	return 0;
 }
